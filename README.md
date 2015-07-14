@@ -19,3 +19,8 @@ http://localhost:<port>/
 
 There will be a web interface.
 The rest should be self-explanatory.
+
+current status
+--------------
+
+- sender.send never returns. probably because of invalid api key. that should be an error... hummmm...
