@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>node-gcm-server</title>
+	</head>
+	<body>
+		<h1>node-gcm-server</h1>
+		<p>
+			This super simple server provides a nice little look into how GCM notifications work, and how they can be sent with <a href="https://www.npmjs.com/package/node-gcm">node-gcm</a>.
+			It lets you send notifications super simply, which you could probably also use for testing purposes or whatever.
+		</p>
+		<p>
+			The following values are all, with the exception of <em>recipient(s)</em>, <code>to</code>, turned into a JSON object, <code>data</code>.
+			To write the equivalent in code, using node-gcm, do this:
+		</p>
+		<pre><code>
+			var gcm = require("node-gcm");
+			var msg = new gcm.Message(data);
+			var sender = new gcm.Sender("api key");
+			sender.send(msg, to, callback);
+		</code></pre>
+		<table>
+			<thead>
+				<tr>
+					<th>key</th>
+					<th>value</th>
+					<th>type</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<th>recipient(s)</th>
+					<td><input type="text" name="to"></td>
+					<td>comma separated string</td>
+				</tr>
+				<tr>
+					<th>collapseKey</th>
+					<td><input type="text" name="collapseKey"></td>
+					<td>string</td>
+				</tr>
+				<tr>
+					<th>priority</th>
+					<td><input type="number" name="priority"></td>
+					<td>number</td>
+				</tr>
+				<tr>
+					<th>contentAvailable</th>
+					<td><input type="checkbox" name="contentAvailable" value="true"></td>
+					<td>boolean</td>
+				</tr>
+				<tr>
+					<th>delayWhileIdle</th>
+					<td><input type="checkbox" name="delayWhileIdle" value="true"></td>
+					<td>boolean</td>
+				</tr>
+				<tr>
+					<th>timeToLive</th>
+					<td><input type="number" name="timeToLive"></td>
+					<td>number</td>
+				</tr>
+				<tr>
+					<th>restrictedPackageName</th>
+					<td><input type="text" name="restrictedPackageName"></td>
+					<td>string</td>
+				</tr>
+				<tr>
+					<th>dryRun</th>
+					<td><input type="checkbox" name="dryRun" value="true"></td>
+					<td>boolean</td>
+				</tr>
+				<tr>
+					<th>data</th>
+					<td><textarea name="data"></textarea></td>
+					<td>JSON (will be run through <code>JSON.parse</code>)</td>
+				</tr>
+				<tr>
+					<th>notification</th>
+					<td><textarea name="notification"></textarea></td>
+					<td>JSON (will be run through <code>JSON.parse</code>)</td>
+				</tr>
+			</tbody>
+			<thead>
+				<tr>
+					<td colspan="3"><button onClick="getDataAndSendRequest()">Send</button></td>
+				</tr>
+			</thead>
+		</table>
+		<script>
+			var inputs = document.querySelectorAll("input, textarea");
+			
+			function getDataAndSendRequest() {
+				var data = getData();
+				sendRequest(data, function(error) {
+					if(error) {
+						return console.error("Failed to send request", error);
+					}
+					console.log("Sent message!");
+				});
+			}
+			
+			function getData() {
+				var data = {};
+				
+				for(var i = 0; i < inputs.length; i++) {
+					var input = inputs.item(i);
+					
+					if(input.name == "to") {
+						data[input.name] = input.value.split(",");
+						continue;
+					}					
+					if(input.type == "checkbox") {
+						if(input.checked) {
+							data[input.name] = true;
+						}
+						continue;
+					}
+					if(input.type == "number") {
+						if(input.value.length) {
+							data[input.name] = parseInt(input.value);
+						}
+						continue;
+					}
+					if(input.type == "text") {
+						if(input.value.length) {
+							data[input.name] = input.value;
+						}
+						continue;
+					}
+					if(input.value.length) {
+						data[input.name] = JSON.parse(input.value);
+					}
+				}
+				
+				console.log("got data", data);
+				
+				return data;
+			}
+			
+			function sendRequest(data, callback) {
+				var req = new XMLHttpRequest();
+				req.onreadystatechange = function() {
+					console.log("resp", req.responseText);
+					callback(null, JSON.parse(req.responseText));
+				};
+				req.open("POST", "/");
+				req.setRequestHeader("Content-Type", "application/json");
+				req.send(JSON.stringify(data));
+			}
+		</script>
+	</body>
+</html>

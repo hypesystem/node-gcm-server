@@ -1,0 +1,30 @@
+{
+  "name": "node-gcm-server",
+  "version": "0.1.0",
+  "description": "A web server that lets you send notifications via node-gcm",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hypesystem/node-gcm-server"
+  },
+  "keywords": [
+    "node-gcm",
+    "gcm",
+    "server"
+  ],
+  "author": "Niels Abildgaard <me@hypesystem.dk> (http://hypesystem.dk)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hypesystem/node-gcm-server/issues"
+  },
+  "homepage": "https://github.com/hypesystem/node-gcm-server",
+  "dependencies": {
+    "body-parser": "^1.13.2",
+    "express": "^4.13.1",
+    "node-gcm": "^0.11.0",
+    "yargs": "^3.15.0"
+  }
+}
