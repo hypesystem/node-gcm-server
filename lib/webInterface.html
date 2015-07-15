@@ -140,8 +140,10 @@
 			function sendRequest(data, callback) {
 				var req = new XMLHttpRequest();
 				req.onreadystatechange = function() {
-					console.log("resp", req.responseText);
-					callback(null, JSON.parse(req.responseText));
+					if(req.readyState == 4) {
+						console.log("resp", req.responseText);
+						callback(null, JSON.parse(req.responseText));
+					}
 				};
 				req.open("POST", "/");
 				req.setRequestHeader("Content-Type", "application/json");
