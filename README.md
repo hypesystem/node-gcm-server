@@ -1,7 +1,11 @@
 node-gcm-server
 ===============
 
-**PRE-RELEASE**
+This library is in a very early stage.
+You are very welcome to help bring it to life and make it something useful.
+
+The purpose of this library is to provide a playground for easily sending out notifications, to assist in learning how exactly notifications over GCM work.
+It is based pretty much exactly on [node-gcm](https://github.com/ToothlessGear/node-gcm).
 
 This library provides a simple http server that lets you play with node-gcm.
 Pull it with git.
