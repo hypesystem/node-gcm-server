@@ -14,6 +14,7 @@
                 display: inline-block;
                 width: 100%;
                 max-width: 700px;
+                margin-bottom: 400px;
             }
             table {
                 border-collapse: collapse;
@@ -44,6 +45,12 @@
             }
             pre code {
                 width: 100%;
+            }
+            .error {
+                color: red;
+            }
+            .success {
+                color: green;
             }
         </style>
     </head>
@@ -128,17 +135,44 @@
                     <td colspan="3"><button onClick="getDataAndSendRequest()">Send</button></td>
                 </tr>
             </thead>
+            <tbody>
+                <tr>
+                    <td colspan="3"><pre><code id="output"></code></pre></td>
+                </tr>
+            </tbody>
         </table>
         <script>
             var inputs = document.querySelectorAll("input, textarea");
+            var output = document.querySelector("#output");
+
+            writeOutput("Ready to send notifications...\n");
+
+            function writeOutput() {
+                output.innerHTML += toLine(arguments);
+            }
+            function toLine(arrayLikeOfStrings) {
+                return Array.prototype.join.call(arrayLikeOfStrings, " ") + "\n";
+            }
+            function writeError() {
+                writeOutput('<span class="error">' + toLine(arguments) + '</span>');
+            }
+            function writeSuccess() {
+                writeOutput('<span class="success">' + toLine(arguments) + '</span>');
+            }
 
             function getDataAndSendRequest() {
                 var data = getData();
-                sendRequest(data, function(error) {
+                writeOutput("Sending message...");
+                sendRequest(data, function(error, response) {
                     if(error) {
-                        return console.error("Failed to send request", error);
+                        return writeError("Failed to talk to sending endpoint", JSON.stringify(error, null, 2));
                     }
-                    console.log("Sent message!");
+                    if(!response.success) {
+                        return writeError("Failed to send notification.", response.error, response.message);
+                    }
+                    writeSuccess("Sent message!", response.message);
+                    writeOutput("Got response from GCM:", response.result);
+                    writeOuput("");
                 });
             }
 
@@ -175,7 +209,7 @@
                     }
                 }
 
-                console.log("got data", data);
+                writeOutput("prepared data", JSON.stringify(data, null, 2));
 
                 return data;
             }
@@ -184,7 +218,7 @@
                 var req = new XMLHttpRequest();
                 req.onreadystatechange = function() {
                     if(req.readyState == 4) {
-                        console.log("resp", req.responseText);
+                        writeOutput("got response", req.responseText);
                         callback(null, JSON.parse(req.responseText));
                     }
                 };
