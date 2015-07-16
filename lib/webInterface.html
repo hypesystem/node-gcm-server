@@ -96,6 +96,13 @@
                 </tr>
             </thead>
             <tbody>
+                {{ #requireApiKey }}
+                <tr>
+                    <th><label for="apiKey">apiKey</label></th>
+                    <td><input type="text" name="apiKey" id="apiKey"></td>
+                    <td>string <b>(required)</b></td>
+                </tr>
+                {{ /requireApiKey }}
                 <tr>
                     <th><label for="to">recipient(s)</label></th>
                     <td><input type="text" name="to" id="to"></td>
