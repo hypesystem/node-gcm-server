@@ -1,7 +1,7 @@
 var http = require("http");
 var yargs = require("yargs");
 
-var args = yargs.default("port", 3000).demand("apiKey").argv;
+var args = yargs.default("port", 3000).argv;
 
 var app = require("./lib/app.js")(args.apiKey, args.senderId);
 
