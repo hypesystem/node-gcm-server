@@ -15,7 +15,9 @@ Then start it like this:
 node start.js --port <port> --apiKey <apiKey> --senderId <senderId>
 ```
 
-- `apiKey` is required.
+- `apiKey` is optional.
+  If it is not given, an `apiKey` field appears in the web interface.
+  It is recommended to use the option from the command line, so secret apiKeys do not have to be pasted in a public place.
 - `port` is optional, defaults to 3000.
 - `senderId` is optional.
   When given, it results in a box being shown to visitors with the senderId, so they have all the information they need to create registration ids.
