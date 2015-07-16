@@ -12,8 +12,13 @@ Pull it with git.
 Then start it like this:
 
 ```sh
-node start.js --port <port> --apiKey <apiKey>
+node start.js --port <port> --apiKey <apiKey> --senderId <senderId>
 ```
+
+- `apiKey` is required.
+- `port` is optional, defaults to 3000.
+- `senderId` is optional.
+  When given, it results in a box being shown to visitors with the senderId, so they have all the information they need to create registration ids.
 
 Then go to:
 
