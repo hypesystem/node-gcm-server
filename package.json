@@ -1,6 +1,6 @@
 {
   "name": "node-gcm-server",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "A web server that lets you send notifications via node-gcm",
   "main": "index.js",
   "scripts": {
