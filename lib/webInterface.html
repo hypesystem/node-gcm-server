@@ -57,10 +57,22 @@
             .success {
                 color: green;
             }
+            .message-box {
+                background: rgba(0,0,100,0.15);
+                padding: 6px 24px;
+            }
         </style>
     </head>
     <body>
         <h1>node-gcm-server</h1>
+        {{ #senderId }}
+        <div class="message-box">
+            <p>
+                The Sender ID, you should use to generate Registration IDs for this server with, is <b>{{ senderId }}</b>.
+                How? <a href="https://developers.google.com/cloud-messaging/android/client#sample-register">See here</a>.
+            </p>
+        </div>
+        {{ /senderId }}
         <p>
             This super simple server provides a nice little look into how GCM notifications work, and how they can be sent with <a href="https://www.npmjs.com/package/node-gcm">node-gcm</a>.
             It lets you send notifications super simply, which you could probably also use for testing purposes or whatever.
