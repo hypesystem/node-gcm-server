@@ -149,7 +149,10 @@
             </tbody>
             <thead>
                 <tr>
-                    <td colspan="3"><button onClick="getDataAndSendRequest()">Send</button></td>
+                    <td colspan="3">
+                        <button onClick="getDataAndSendRequest()">Send</button>
+                        <button onClick="clearOutput()">Clear output</button>
+                    </td>
                 </tr>
             </thead>
             <tbody>
@@ -161,8 +164,7 @@
         <script>
             var inputs = document.querySelectorAll("input, textarea");
             var output = document.querySelector("#output");
-
-            writeOutput("Ready to send notifications...\n");
+            clearOutput();
 
             function writeOutput() {
                 output.innerHTML += toLine(arguments);
@@ -241,6 +243,11 @@
                 req.open("POST", "/");
                 req.setRequestHeader("Content-Type", "application/json");
                 req.send(JSON.stringify(data));
+            }
+
+            function clearOutput() {
+                output.innerHTML = '';
+                writeOutput("Ready to send notifications...\n");
             }
         </script>
     </body>
