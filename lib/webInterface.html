@@ -175,8 +175,8 @@
                     if(!response.success) {
                         return writeError("Failed to send notification.", response.error, response.message);
                     }
+                    writeOutput("Got response from GCM:", JSON.stringify(response.result, null, 2));
                     writeSuccess("Sent message!", response.message);
-                    writeOutput("Got response from GCM:", response.result);
                     writeOuput("");
                 });
             }
@@ -223,7 +223,6 @@
                 var req = new XMLHttpRequest();
                 req.onreadystatechange = function() {
                     if(req.readyState == 4) {
-                        writeOutput("got response", req.responseText);
                         callback(null, JSON.parse(req.responseText));
                     }
                 };
