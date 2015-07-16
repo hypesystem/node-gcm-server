@@ -209,7 +209,9 @@
                     var input = inputs.item(i);
 
                     if(input.name == "to") {
-                        data[input.name] = input.value.split(",");
+                        if(input.value.length) {
+                            data[input.name] = input.value.split(",");
+                        }
                         continue;
                     }
                     if(input.type == "checkbox") {
